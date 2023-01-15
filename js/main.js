@@ -8,11 +8,15 @@ const blockMain = document.querySelector(".main")
 const btnEnter = document.querySelector(".btn-nickname")
 const btnExit = document.querySelector(".btn-exit")
 const btnStart = document.querySelector(".btn-start")
+const btnAgain = document.querySelector(".btn-again")
 
+const result = document.querySelector(".main__result")
 const listItems = document.querySelector(".list-items")
 
 const scoreBot = document.querySelector(".main__score-bot")
 const scoreYou = document.querySelector(".main__score-you")
+
+btnAgain.style.display = "none"
 
 arrItem.forEach((item)=>{
     let opt = document.createElement("option")
@@ -42,6 +46,11 @@ btnExit.addEventListener("click", ()=>{
     title.style.background = "inherit"
     document.querySelector(".main__item-bot").textContent = '?'
     document.querySelector(".item-you").textContent = '?'
+    result.textContent = ""
+    scoreBot.textContent = 0
+    scoreYou.textContent = 0
+    btnStart.style.display = "block"
+    btnAgain.style.display = "none"
 })
 
 
@@ -63,6 +72,14 @@ btnStart.addEventListener("click", ()=>{
     check(bot, you)
     if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
         btnStart.style.display = "none"
+        btnAgain.style.display = "block"
+        if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
+            result.textContent = 'Tie'
+        }else if (parseInt(scoreYou.textContent) == 3){
+            result.textContent = 'You`re a winner!'
+        }else {
+            result.textContent = 'You`re the loser!'
+        }
     }
 })
 
@@ -78,6 +95,14 @@ function check(itemBot, itemYou) {
     }else {
         scoreYou.textContent = parseInt(scoreYou.textContent) + 1
     }
-        
-    
 }
+
+btnAgain.addEventListener("click", ()=>{
+    document.querySelector(".main__item-bot").textContent = '?'
+    document.querySelector(".item-you").textContent = '?'
+    result.textContent = ""
+    scoreBot.textContent = 0
+    scoreYou.textContent = 0
+    btnStart.style.display = "block"
+    btnAgain.style.display = "none"
+})

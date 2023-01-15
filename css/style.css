@@ -120,7 +120,7 @@ input {
 }
 
 .btns {
-    margin-top: 50px;
+    margin-top: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,4 +134,9 @@ input {
 
 .btn-exit:hover {
     background: #5d77cc;
+}
+
+.main__result {
+    color: red;
+    margin-top: 28px;
 }
