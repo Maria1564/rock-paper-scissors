@@ -90,12 +90,17 @@ input {
     margin: 0 auto;
     max-width: 800px;
     gap: 40px;
+    align-items: end;
 }
 
 .main__item {
     padding: 40px;
     font-weight: 700px;
     font-size: 25px;
+}
+
+.item-you {
+    margin-top: 20px;
 }
 
 .main__bot {
