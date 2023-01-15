@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <h1 class="title">КАМЕНЬ, НОЖНИЦЫ, БУМАГА</h1>
+    <div class="enterGame">
+        <h2>Введите ваш никнейм</h2>
+        <div class="form">
+            <label for="nickname">Ник: </label>
+            <input type="text" class="nickname" id="nickname">
+        </div>
+        <button class="btn btn-nickname">Ок</button>
+        
+    </div>
+    
+    <div class="main">
+        <div class="main__sore">
+            <span class="main__score-bot">0</span> : <span class="main__score-you">0</span>
+        </div>
+        <div class="main__players">
+            <div class="main__inner-bot">
+                <div class="main__item main__item-bot">?</div>
+                <p class="main__bot">Кто-то</p>
+            </div>
+            <div class="main__inner-you">
+                <div class="main__item main__item-you">
+                    <select class="list-items"></select>
+                </div>
+                <p class="main__you"></p>
+            </div>
+        </div>
+        <div class="btns">
+            <button class="btn btn-start">Вперёд</button>
+            <button class="btn btn-exit">Выйти</button>
+        </d>
+    </div>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

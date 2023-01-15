@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@400;500;600;700;800&display=swap');
+* {
+    font-family: 'Sofia Sans Semi Condensed', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    display: none;
+}
+
+.title {
+    text-align: center;
+    padding: 10px;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+}
+
+input {
+    outline: none;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+.enterGame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #95a7e4;
+    width: 400px;
+    padding: 30px 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+.enterGame > h2 {
+    margin-bottom: 20px;
+}
+.btn {
+    background-color: #FF7C00;
+    padding: 10px;
+    width: 120px;
+    border-radius: 15px;
+    border: 2px solid black;
+    font-size: 14px;
+    font-weight: 800;
+    transition: .5s;
+
+}
+
+.btn:hover {
+    background-color: #FF9D40;
+    border-color: rgb(53, 53, 53);
+    color: rgb(53, 53, 53);
+}
+
+.main {
+    background: #95a7e4;
+    text-align: center;
+    padding: 20px;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    height: 100vh;
+}
+
+.main__sore {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.main__score-bot {
+    color:  #1cd31c;
+    font-weight: 700;
+}
+
+.main__score-you {
+    color: #e7882e;
+    font-weight: 700;
+}
+
+.main__players {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+    max-width: 800px;
+    gap: 40px;
+}
+
+.main__item {
+    padding: 40px;
+    font-weight: 700px;
+    font-size: 25px;
+}
+
+.main__bot {
+    background-color: #3DF23D;
+
+}
+
+.main__you {
+    background-color: #FF9D40;
+}
+
+.list-items {
+    width: 200px;
+    height: 32px;
+    outline: none;
+    font-size: 18px;
+}
+
+.btns {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-exit {
+    background: #1f47cc;
+    transition: .5s;
+}
+
+.btn-exit:hover {
+    background: #5d77cc;
+}
