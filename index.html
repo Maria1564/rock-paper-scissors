@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
     <h1 class="title">КАМЕНЬ, НОЖНИЦЫ, БУМАГА</h1>
@@ -17,6 +17,14 @@
         </div>
         <button class="btn btn-nickname">Ок</button>
         
+    </div>
+
+    <div class="type-game">
+        <h2>Вид игры</h2>
+        <div class="btns">
+            <button class="btn btn-online">по сети</button>
+            <button class="btn btn-one-player">одиночная игра</button>
+        </div>
     </div>
     
     <div class="main">
@@ -47,7 +55,7 @@
     </div>
 
     
-
-    <script src="./js/main.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./assets/main.js"></script>
 </body>
 </html>

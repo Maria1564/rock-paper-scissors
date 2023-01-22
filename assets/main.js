@@ -1,14 +1,18 @@
 const arrItem = ['камень', 'ножницы', 'бумага']
+const socket = io()
 
 // let i = Math.round(Math.random()*(arrItem.length - 1))
 // console.log(i)
 const blockEnter = document.querySelector(".enterGame")
 const blockMain = document.querySelector(".main")
+const blockTypeGame = document.querySelector(".type-game")
 
 const btnEnter = document.querySelector(".btn-nickname")
 const btnExit = document.querySelector(".btn-exit")
 const btnStart = document.querySelector(".btn-start")
 const btnAgain = document.querySelector(".btn-again")
+const btnOnlineGame = document.querySelector(".btn-online")
+const btnOnePlayer = document.querySelector(".btn-one-player")
 
 const result = document.querySelector(".main__result")
 const listItems = document.querySelector(".list-items")
@@ -18,11 +22,40 @@ const scoreYou = document.querySelector(".main__score-you")
 
 btnAgain.style.display = "none"
 
+if(window.location.href == 'http://localhost:4000/')   {
+    blockTypeGame.style.display = "none"
+    blockEnter.style.display = "flex"
+}
+
 arrItem.forEach((item)=>{
     let opt = document.createElement("option")
     opt.textContent = item
     listItems.append(opt)
 })
+
+btnOnlineGame.addEventListener("click", (e)=>{
+    socket.emit("send request", 2)
+    socket.on("send connected", (data)=> alert(data.mess))
+    socket.on("conn game", (data)=> {
+       if(data.totalNow == 2){
+        blockTypeGame.style.display = "none"
+        blockEnter.style.display = "flex"
+       }
+    })
+
+    socket.on("dis", (data)=>{
+        alert(data.mess)
+        if(data.status){
+            btnOnlineGame.style.display = "none"
+        }
+    })
+
+})
+
+btnOnePlayer.addEventListener("click", (e)=>{
+    window.location.href = "http://localhost:4000"
+})
+
 
 function validateNickname() {
     let nick = document.querySelector(".nickname").value
