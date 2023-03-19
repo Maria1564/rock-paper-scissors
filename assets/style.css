@@ -30,7 +30,8 @@ input {
     font-weight: 600;
 }
 .enterGame,
-.type-game {
+.type-game,
+.waiting {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -46,7 +47,8 @@ input {
     gap: 10px;
 }
 
-.enterGame {
+.enterGame,
+.waiting {
     display: none;
 }
 .enterGame > h2 {

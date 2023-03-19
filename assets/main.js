@@ -6,6 +6,7 @@ const socket = io()
 const blockEnter = document.querySelector(".enterGame")
 const blockMain = document.querySelector(".main")
 const blockTypeGame = document.querySelector(".type-game")
+const blockWaiting = document.querySelector(".waiting")
 
 const btnEnter = document.querySelector(".btn-nickname")
 const btnExit = document.querySelector(".btn-exit")
@@ -39,7 +40,11 @@ btnOnlineGame.addEventListener("click", (e)=>{
     socket.on("conn game", (data)=> {
        if(data.totalNow == 2){
         blockTypeGame.style.display = "none"
+        blockWaiting.style.display = "none"
         blockEnter.style.display = "flex"
+       }else{
+        blockTypeGame.style.display = "none"
+        blockWaiting.style.display = "flex"
        }
     })
 
@@ -56,21 +61,43 @@ btnOnePlayer.addEventListener("click", (e)=>{
     window.location.href = "http://localhost:4000"
 })
 
+if(window.location.href == 'http://localhost:4000/')   {
+    
+}
+
+
+
 
 function validateNickname() {
     let nick = document.querySelector(".nickname").value
-    if(nick.trim() == ""){
-        alert('Вы ничего не ввели')
-    }else{
+    if(nick.trim() == "") alert('Вы ничего не ввели')
+}
+/*****************************************************************************/
+btnEnter.addEventListener("click", (e)=>{
+
+    validateNickname()
+    let nickname = blockEnter.querySelector(".nickname").value
+    socket.emit("ready", nickname)
+    btnEnter.disabled = "true"  
+})
+socket.on('ready player', (data)=>{
+    alert(data)
+})
+socket.on('total ready', (data)=>{
+    console.log(document.querySelector(".main__you").textContent)
+    // if(document.querySelector(".main__you").textContent == ''){
+        document.querySelector(".main__you").textContent = `${data.nick}` //!
+    // }else{
+    //     document.querySelector(".main__bot").textContent = `${data.nick}`
+    // }
+
+    if(data.total == 2){
         blockEnter.style.display = "none"
         blockMain.style.display = "block"
         let title = document.querySelector(".title")
         title.style.background = "#95a7e4"
-        document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
     }
-}
-
-btnEnter.addEventListener("click", validateNickname)
+})
 
 btnExit.addEventListener("click", ()=>{
     blockEnter.style.display = "flex"
