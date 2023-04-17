@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const http = require("http").createServer(app) 
 const io = require("socket.io")(http)
+PORT = 4000
 
 //Маршрут
 app.get("/", (req, res)=>{
@@ -23,4 +24,4 @@ io.on("connection", (socket)=>{
 
 
 
-http.listen(4000, ()=> console.log("сервер начал работу"))
+http.listen(PORT, ()=> console.log(`сервер начал работу ${PORT}`))

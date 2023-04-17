@@ -61,43 +61,57 @@ btnOnePlayer.addEventListener("click", (e)=>{
     window.location.href = "http://localhost:4000"
 })
 
+//! Если одиночная игра
 if(window.location.href == 'http://localhost:4000/')   {
-    
+    btnEnter.addEventListener("click", (e)=>{
+        let nick = validateNickname()
+        blockEnter.style.display = "none"
+        blockMain.style.display = "block"
+        let title = document.querySelector(".title")
+        title.style.background = "#95a7e4"
+        document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
+    })
 }
 
+
+
+//! Если онлайн игра
+if(window.location.href == 'http://localhost:3000/') {
+    btnEnter.addEventListener("click", (e)=>{
+        validateNickname()
+        let nickname = blockEnter.querySelector(".nickname").value
+        socket.emit("ready", nickname)
+        btnEnter.disabled = "true"  
+    })
+    socket.on('ready player', (data)=>{
+        alert(data)
+    })
+    socket.on('total ready', (data)=>{
+        console.log(document.querySelector(".main__you").textContent)
+        // if(document.querySelector(".main__you").textContent == ''){
+            document.querySelector(".main__you").textContent = `${data.nick}` //!
+        // }else{
+        //     document.querySelector(".main__bot").textContent = `${data.nick}`
+        // }
+    
+        if(data.total == 2){
+            blockEnter.style.display = "none"
+            blockMain.style.display = "block"
+            let title = document.querySelector(".title")
+            title.style.background = "#95a7e4"
+        }
+    })
+}
 
 
 
 function validateNickname() {
     let nick = document.querySelector(".nickname").value
+    console.log(nick)
     if(nick.trim() == "") alert('Вы ничего не ввели')
+    return nick
 }
 /*****************************************************************************/
-btnEnter.addEventListener("click", (e)=>{
-
-    validateNickname()
-    let nickname = blockEnter.querySelector(".nickname").value
-    socket.emit("ready", nickname)
-    btnEnter.disabled = "true"  
-})
-socket.on('ready player', (data)=>{
-    alert(data)
-})
-socket.on('total ready', (data)=>{
-    console.log(document.querySelector(".main__you").textContent)
-    // if(document.querySelector(".main__you").textContent == ''){
-        document.querySelector(".main__you").textContent = `${data.nick}` //!
-    // }else{
-    //     document.querySelector(".main__bot").textContent = `${data.nick}`
-    // }
-
-    if(data.total == 2){
-        blockEnter.style.display = "none"
-        blockMain.style.display = "block"
-        let title = document.querySelector(".title")
-        title.style.background = "#95a7e4"
-    }
-})
 
 btnExit.addEventListener("click", ()=>{
     blockEnter.style.display = "flex"
