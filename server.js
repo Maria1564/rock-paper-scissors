@@ -14,6 +14,7 @@ app.use(express.static(__dirname + "/"))
 
 let totalClient
 let totalReadied = 0
+const arrNicknames = []
 io.on("connection", (socket)=>{
     console.log("произошло подключение к серверу")
     socket.on("send request", (data)=>{
@@ -37,8 +38,15 @@ io.on("connection", (socket)=>{
     socket.on("ready", (data)=> {
         socket.broadcast.emit("ready player", `игрок ${data} готов начать игру`)
         totalReadied += 1
-        io.emit("total ready", {total: totalReadied, nick: data})
-        if(totalReadied == 2) totalReadied = 0
+
+        arrNicknames.push(data)
+
+        if(arrNicknames.length == 2){
+            //////////////////!
+            io.emit("total ready", {total: totalReadied, nicknames: arrNicknames})
+            if(totalReadied == 2) totalReadied = 0
+            arrNicknames.length = 0
+        }
     })
 
     socket.on("disconnect", ()=>{

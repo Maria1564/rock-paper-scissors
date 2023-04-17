@@ -83,22 +83,29 @@ if(window.location.href == 'http://localhost:3000/') {
         socket.emit("ready", nickname)
         btnEnter.disabled = "true"  
     })
+
     socket.on('ready player', (data)=>{
         alert(data)
     })
+
+
     socket.on('total ready', (data)=>{
-        console.log(document.querySelector(".main__you").textContent)
-        // if(document.querySelector(".main__you").textContent == ''){
-            document.querySelector(".main__you").textContent = `${data.nick}` //!
-        // }else{
-        //     document.querySelector(".main__bot").textContent = `${data.nick}`
-        // }
-    
+        console.log(data.nicknames)
         if(data.total == 2){
+            data.nicknames.forEach(nick =>{
+                if(nick != blockEnter.querySelector(".nickname").value) {
+                    document.querySelector(".main__bot").textContent = `${nick}`
+                }else{
+                    document.querySelector(".main__you").textContent = `${nick}`
+                }
+            })
+
             blockEnter.style.display = "none"
             blockMain.style.display = "block"
             let title = document.querySelector(".title")
             title.style.background = "#95a7e4"
+
+
         }
     })
 }
