@@ -79,6 +79,8 @@ if(window.location.href == 'http://localhost:4000/')   {
         let you = choicesYou()
         document.querySelector(".item-you").textContent = you
         check(bot, you)
+
+        // Занести в отдельную функцию
         if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
             btnStart.style.display = "none"
             btnAgain.style.display = "block"
@@ -89,6 +91,7 @@ if(window.location.href == 'http://localhost:4000/')   {
             }else {
                 result.textContent = 'You`re the loser!'
             }
+            /*********************************************/
         }
     })
 }
@@ -132,7 +135,7 @@ if(window.location.href == 'http://localhost:3000/') {
     btnStart.addEventListener("click",()=>{
         let youSelect = choicesYou()
         document.querySelector(".item-you").textContent = youSelect
-        // console.log(youSelect)
+        console.log(youSelect)
         let dataSelect = []
         const nickname = document.querySelector(".main__you").textContent
         console.log(nickname)
@@ -143,20 +146,6 @@ if(window.location.href == 'http://localhost:3000/') {
         })
         btnStart.disabled = true
 
-      
-        
-
-        // if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
-        //     btnStart.style.display = "none"
-        //     btnAgain.style.display = "block"
-        //     if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
-        //         result.textContent = 'Tie'
-        //     }else if (parseInt(scoreYou.textContent) == 3){
-        //         result.textContent = 'You`re a winner!'
-        //     }else {
-        //         result.textContent = 'You`re the loser!'
-        // }
-
     })
 
 
@@ -164,7 +153,7 @@ if(window.location.href == 'http://localhost:3000/') {
         if(typeof data == "string"){
             alert(data)
         }else{
-            // console.log(data)
+            console.log(data)
             data.forEach(item=>{
                 console.log(item.player)
                 if(item.player == document.querySelector(".main__bot").textContent){
@@ -175,12 +164,32 @@ if(window.location.href == 'http://localhost:3000/') {
                     you = item.select
                 }
             })
+
+            check(bot, you)
+
+            // Занести в отдельную функцию
+            if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
+                btnStart.style.display = "none"
+                btnAgain.style.display = "block"
+                if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
+                    result.textContent = 'Tie'
+                }else if (parseInt(scoreYou.textContent) == 3){
+                    result.textContent = 'You`re a winner!'
+                }else {
+                    result.textContent = 'You`re the loser!'
+                }
+            }
+            /*********************************************/
+
+            setTimeout(()=>{
+                btnStart.disabled = false
+
+                document.querySelector(".main__item-bot").textContent = "?"
+                document.querySelector(".item-you").textContent = "?"
+            }, 1000)
+
         }
 
-        check(bot, you)
-        btnStart.disabled = false
-        document.querySelector(".main__item-bot").textContent = "?"
-        document.querySelector(".item-you").textContent = "?"
     })
 }
 

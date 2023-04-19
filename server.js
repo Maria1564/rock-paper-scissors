@@ -52,10 +52,10 @@ io.on("connection", (socket)=>{
 
     socket.on("selectedElem", (data)=>{
         arrSelectedElement.push(data)
-        console.log(data)
+        console.log(arrSelectedElement)
         if(arrSelectedElement.length == 2){
             io.emit("selectedElem", arrSelectedElement)
-            arrNicknames.length = 0
+            arrSelectedElement.length = 0
         }else{
             io.to(socket.id).emit("selectedElem", "Ждём выбор второго игрока")
         }
