@@ -15,6 +15,7 @@ app.use(express.static(__dirname + "/"))
 let totalClient
 let totalReadied = 0
 const arrNicknames = []
+const arrSelectedElement = [] 
 io.on("connection", (socket)=>{
     console.log("произошло подключение к серверу")
     socket.on("send request", (data)=>{
@@ -46,6 +47,17 @@ io.on("connection", (socket)=>{
             io.emit("total ready", {total: totalReadied, nicknames: arrNicknames})
             if(totalReadied == 2) totalReadied = 0
             arrNicknames.length = 0
+        }
+    })
+
+    socket.on("selectedElem", (data)=>{
+        arrSelectedElement.push(data)
+        console.log(data)
+        if(arrSelectedElement.length == 2){
+            io.emit("selectedElem", arrSelectedElement)
+            arrNicknames.length = 0
+        }else{
+            io.to(socket.id).emit("selectedElem", "Ждём выбор второго игрока")
         }
     })
 

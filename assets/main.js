@@ -71,6 +71,26 @@ if(window.location.href == 'http://localhost:4000/')   {
         title.style.background = "#95a7e4"
         document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
     })
+
+
+    btnStart.addEventListener("click", ()=>{
+        let bot = choicesBot(arrItem)
+        document.querySelector(".main__item-bot").textContent = bot
+        let you = choicesYou()
+        document.querySelector(".item-you").textContent = you
+        check(bot, you)
+        if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
+            btnStart.style.display = "none"
+            btnAgain.style.display = "block"
+            if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
+                result.textContent = 'Tie'
+            }else if (parseInt(scoreYou.textContent) == 3){
+                result.textContent = 'You`re a winner!'
+            }else {
+                result.textContent = 'You`re the loser!'
+            }
+        }
+    })
 }
 
 
@@ -107,6 +127,60 @@ if(window.location.href == 'http://localhost:3000/') {
 
 
         }
+    })
+
+    btnStart.addEventListener("click",()=>{
+        let youSelect = choicesYou()
+        document.querySelector(".item-you").textContent = youSelect
+        // console.log(youSelect)
+        let dataSelect = []
+        const nickname = document.querySelector(".main__you").textContent
+        console.log(nickname)
+        //данные о выбраном элементе и кто выбрал
+        socket.emit("selectedElem", {
+            player: nickname,
+            select: youSelect,
+        })
+        btnStart.disabled = true
+
+      
+        
+
+        // if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
+        //     btnStart.style.display = "none"
+        //     btnAgain.style.display = "block"
+        //     if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
+        //         result.textContent = 'Tie'
+        //     }else if (parseInt(scoreYou.textContent) == 3){
+        //         result.textContent = 'You`re a winner!'
+        //     }else {
+        //         result.textContent = 'You`re the loser!'
+        // }
+
+    })
+
+
+    socket.on("selectedElem", (data)=>{
+        if(typeof data == "string"){
+            alert(data)
+        }else{
+            // console.log(data)
+            data.forEach(item=>{
+                console.log(item.player)
+                if(item.player == document.querySelector(".main__bot").textContent){
+                    document.querySelector(".main__item-bot").textContent = item.select
+                    bot = item.select
+                }else{
+                    document.querySelector(".item-you").textContent = item.select
+                    you = item.select
+                }
+            })
+        }
+
+        check(bot, you)
+        btnStart.disabled = false
+        document.querySelector(".main__item-bot").textContent = "?"
+        document.querySelector(".item-you").textContent = "?"
     })
 }
 
@@ -145,24 +219,6 @@ function choicesYou() {
     return item
 }
 
-btnStart.addEventListener("click", ()=>{
-    let bot = choicesBot(arrItem)
-    document.querySelector(".main__item-bot").textContent = bot
-    let you = choicesYou()
-    document.querySelector(".item-you").textContent = you
-    check(bot, you)
-    if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
-        btnStart.style.display = "none"
-        btnAgain.style.display = "block"
-        if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
-            result.textContent = 'Tie'
-        }else if (parseInt(scoreYou.textContent) == 3){
-            result.textContent = 'You`re a winner!'
-        }else {
-            result.textContent = 'You`re the loser!'
-        }
-    }
-})
 
 function check(itemBot, itemYou) {
     
