@@ -71,29 +71,20 @@ if(window.location.href == 'http://localhost:4000/')   {
         title.style.background = "#95a7e4"
         document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
     })
-
-
+    
+    
     btnStart.addEventListener("click", ()=>{
         let bot = choicesBot(arrItem)
         document.querySelector(".main__item-bot").textContent = bot
         let you = choicesYou()
         document.querySelector(".item-you").textContent = you
+        
         check(bot, you)
-
-        // Занести в отдельную функцию
-        if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
-            btnStart.style.display = "none"
-            btnAgain.style.display = "block"
-            if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
-                result.textContent = 'Tie'
-            }else if (parseInt(scoreYou.textContent) == 3){
-                result.textContent = 'You`re a winner!'
-            }else {
-                result.textContent = 'You`re the loser!'
-            }
-            /*********************************************/
-        }
+        
+        winnerOrLoser()
     })
+
+    btnExit.addEventListener("click", exit)
 }
 
 
@@ -104,7 +95,7 @@ if(window.location.href == 'http://localhost:3000/') {
         validateNickname()
         let nickname = blockEnter.querySelector(".nickname").value
         socket.emit("ready", nickname)
-        btnEnter.disabled = "true"  
+        btnEnter.disabled = true 
     })
 
     socket.on('ready player', (data)=>{
@@ -167,19 +158,9 @@ if(window.location.href == 'http://localhost:3000/') {
 
             check(bot, you)
 
-            // Занести в отдельную функцию
-            if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
-                btnStart.style.display = "none"
-                btnAgain.style.display = "block"
-                if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
-                    result.textContent = 'Tie'
-                }else if (parseInt(scoreYou.textContent) == 3){
-                    result.textContent = 'You`re a winner!'
-                }else {
-                    result.textContent = 'You`re the loser!'
-                }
-            }
-            /*********************************************/
+      
+            winnerOrLoser()
+          
 
             setTimeout(()=>{
                 btnStart.disabled = false
@@ -190,6 +171,17 @@ if(window.location.href == 'http://localhost:3000/') {
 
         }
 
+    })
+
+
+    btnExit.addEventListener("click",()=>{
+        exit()
+        socket.emit("exit")
+    })
+
+    socket.on("exit", text=>{
+        alert(text)
+        exit()
     })
 }
 
@@ -203,20 +195,20 @@ function validateNickname() {
 }
 /*****************************************************************************/
 
-btnExit.addEventListener("click", ()=>{
+function exit(){
     blockEnter.style.display = "flex"
     blockMain.style.display = "none"
     let title = document.querySelector(".title")
     title.style.background = "inherit"
     document.querySelector(".main__item-bot").textContent = '?'
-    document.querySelector(".item-you").textContent = '?'
+    document.querySelector(".item-you").textContent = '?' 
     result.textContent = ""
     scoreBot.textContent = 0
     scoreYou.textContent = 0
     btnStart.style.display = "block"
-    btnAgain.style.display = "none"
-})
-
+    btnAgain.style.display = "none"  
+    btnEnter.disabled = false
+}
 
 function choicesBot(arr) {
     let i = Math.round(Math.random()*(arr.length - 1))
@@ -240,6 +232,20 @@ function check(itemBot, itemYou) {
         scoreYou.textContent = parseInt(scoreYou.textContent) + 1
     }else {
         scoreYou.textContent = parseInt(scoreYou.textContent) + 1
+    }
+}
+
+function winnerOrLoser() {
+    if(parseInt(scoreBot.textContent) == 3 || parseInt(scoreYou.textContent) == 3) {
+        btnStart.style.display = "none"
+        btnAgain.style.display = "block"
+        if(parseInt(scoreBot.textContent) == 3 && parseInt(scoreYou.textContent) == 3) {
+            result.textContent = 'Tie'
+        }else if (parseInt(scoreYou.textContent) == 3){
+            result.textContent = 'You`re a winner!'
+        }else {
+            result.textContent = 'You`re the loser!'
+        }
     }
 }
 

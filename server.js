@@ -61,6 +61,10 @@ io.on("connection", (socket)=>{
         }
     })
 
+    socket.on("exit", ()=>{
+        socket.broadcast.emit("exit", "Игрок вышел из игры, \nигра закончена")
+    })
+
     socket.on("disconnect", ()=>{
         console.log(`${socket.id} вышел с сервера`)
     })
