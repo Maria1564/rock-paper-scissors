@@ -68,7 +68,7 @@ if(window.location.href == 'http://localhost:4000/')   {
         blockEnter.style.display = "none"
         blockMain.style.display = "block"
         let title = document.querySelector(".title")
-        title.style.background = "#95a7e4"
+        // title.style.background = "var(--color-primary)"
         document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
     })
     
@@ -117,7 +117,7 @@ if(window.location.href == 'http://localhost:3000/') {
             blockEnter.style.display = "none"
             blockMain.style.display = "block"
             let title = document.querySelector(".title")
-            title.style.background = "#95a7e4"
+            // title.style.background = "#95a7e4"
 
 
         }
