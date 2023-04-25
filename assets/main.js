@@ -65,11 +65,16 @@ btnOnePlayer.addEventListener("click", (e)=>{
 if(window.location.href == 'http://localhost:4000/')   {
     btnEnter.addEventListener("click", (e)=>{
         let nick = validateNickname()
-        blockEnter.style.display = "none"
-        blockMain.style.display = "block"
-        let title = document.querySelector(".title")
-        // title.style.background = "var(--color-primary)"
-        document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
+        console.log("nick >> ", nick)
+        if(nick != ""){
+            blockEnter.style.display = "none"
+
+            document.body.style.backdropFilter = 'none';
+            blockMain.style.display = "block"
+            let title = document.querySelector(".title")
+            // title.style.background = "var(--color-primary)"
+            document.querySelector(".main__you").textContent = `${nick}  (вы)` //!
+        }
     })
     
     
@@ -92,10 +97,13 @@ if(window.location.href == 'http://localhost:4000/')   {
 //! Если онлайн игра
 if(window.location.href == 'http://localhost:3000/') {
     btnEnter.addEventListener("click", (e)=>{
-        validateNickname()
+        
+       
+        if( validateNickname() != ""){
         let nickname = blockEnter.querySelector(".nickname").value
         socket.emit("ready", nickname)
         btnEnter.disabled = true 
+        }
     })
 
     socket.on('ready player', (data)=>{
@@ -115,6 +123,7 @@ if(window.location.href == 'http://localhost:3000/') {
             })
 
             blockEnter.style.display = "none"
+            document.body.style.backdropFilter = 'none';
             blockMain.style.display = "block"
             let title = document.querySelector(".title")
             // title.style.background = "#95a7e4"
@@ -190,16 +199,21 @@ if(window.location.href == 'http://localhost:3000/') {
 function validateNickname() {
     let nick = document.querySelector(".nickname").value
     console.log(nick)
-    if(nick.trim() == "") alert('Вы ничего не ввели')
+    if(nick.trim() == "")  {
+        alert('Вы ничего не ввели')
+        return ''
+    }
     return nick
 }
 /*****************************************************************************/
 
 function exit(){
+    document.body.style.backdropFilter = "blur(4px)"
+    console.log(document.body.style.backdropFilter = "blur(4px)")
     blockEnter.style.display = "flex"
     blockMain.style.display = "none"
     let title = document.querySelector(".title")
-    title.style.background = "inherit"
+    // title.style.background = "inherit"
     document.querySelector(".main__item-bot").textContent = '?'
     document.querySelector(".item-you").textContent = '?' 
     result.textContent = ""
